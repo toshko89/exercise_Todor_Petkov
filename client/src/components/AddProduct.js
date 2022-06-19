@@ -7,10 +7,12 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { newProduct } from '../services/productService.js';
+import { newProduct as newProductService } from '../services/productService.js';
+import DealSelect from './DealSelect.js';
 
 export default function AddProduct({ products, setProducts }) {
-  const [product, setProduct] = useState({ name: '', price: '', image: '' });
+  const [newProduct, setNewProduct] = useState({ name: '', price: '', image: '' });
+  const [deal, setDeal] = useState('');
   const [open, setOpen] = useState(false);
   const [error, setError] = useState(false);
 
@@ -23,13 +25,19 @@ export default function AddProduct({ products, setProducts }) {
   };
 
   const submitNewProduct = async () => {
-    if (product.name.trim() === '' || product.price.trim() === '' || product.image.trim() === '') {
+    if (newProduct.name.trim() === '' || newProduct.price.trim() === '' || newProduct.image.trim() === '') {
       setError('All fields are required');
       return;
     }
 
+    if (deal.trim() === '') {
+      setError('Please select a deal');
+      return;
+    }
+
     try {
-      const res = await newProduct(product);
+      const productToAdd = { ...newProduct, deal };
+      const res = await newProductService(productToAdd);
       if (res.errors) {
         setError(res.message);
         return;
@@ -62,7 +70,7 @@ export default function AddProduct({ products, setProducts }) {
             type="text"
             fullWidth
             variant="standard"
-            onChange={(e) => setProduct({ ...product, name: e.target.value })}
+            onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
             onBlur={() => setError(false)}
           />
           <TextField
@@ -73,7 +81,7 @@ export default function AddProduct({ products, setProducts }) {
             type="number"
             fullWidth
             variant="standard"
-            onChange={(e) => setProduct({ ...product, price: e.target.value })}
+            onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
             onBlur={() => setError(false)}
           />
           <TextField
@@ -84,10 +92,12 @@ export default function AddProduct({ products, setProducts }) {
             type="text"
             fullWidth
             variant="standard"
-            onChange={(e) => setProduct({ ...product, image: e.target.value })}
+            onChange={(e) => setNewProduct({ ...newProduct, image: e.target.value })}
             onBlur={() => setError(false)}
           />
+          <DealSelect deal={deal} setDeal={setDeal} />
         </DialogContent>
+
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={submitNewProduct}>Submit</Button>

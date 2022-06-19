@@ -15,7 +15,7 @@ export default function CartCard({ item, addToCartClick,removeFromCartClick }) {
           <button type="button" onClick={() => addToCartClick(item)} className="btn-sm right inc btn btn-outline-secondary">
             <i className="feather-plus"></i> </button>
         </div>
-        <p className="text-gray mb-0 float-right ml-2 text-muted small">${item.price}</p>
+        <p className="text-gray mb-0 float-right ml-2 text-muted small">{item.price}e</p>
       </div>
     </div>
   )

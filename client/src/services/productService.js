@@ -1,7 +1,6 @@
 const URL = 'http://localhost:5001/groceries'
 
 async function newProduct(product) {
-  console.log(product);
   try {
     const newData = await fetch(URL + '/create', {
       method: 'POST',

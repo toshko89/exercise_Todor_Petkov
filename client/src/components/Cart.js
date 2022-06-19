@@ -10,6 +10,36 @@ export default function Cart() {
   const orders = useSelector(state => state.cart.orders);
   const navigate = useNavigate();
 
+  if (orders.length > 0) {
+    let total = 0;
+    let product = orders.filter(order => order.deal === '2 for 3');
+    let min = Math.min(...product.map(product => product.price));
+    console.log(product);
+    const deals2for3 = product.map(order => {
+      console.log(order);
+      if (order.quantity >= 2) {
+        return order.price * (order.quantity - (order.quantity - 2))
+        // return { ...order, quantity: order.quantity - (order.quantity - 2) }
+      }
+      console.log(order.price * order.quantity);
+      return order.price * order.quantity
+    }).map(product => product.price * product.quantity)
+      // .reduce((acc, curr) => acc + curr, 0) - min;
+    console.log(deals2for3);
+    total += deals2for3;
+
+    const deals1for1 = orders.filter(order => order.deal === 'Buy 1 get 1 half price')
+      .map(product => {
+        if (product.quantity >= 2) {
+          return (product.price / 2) + product.price
+        }
+        return product.price
+      }).reduce((acc, curr) => acc + curr, 0);
+    total += deals1for1;
+    // console.log(total.toFixed(2));
+  }
+
+
   function addToCartClick(item) {
     dispatch(addToCart(item));
   }
@@ -24,15 +54,13 @@ export default function Cart() {
     navigate("/");
   }
 
-  console.log(orders);
-
   return (
-    <div className="container position-relative">
+    <div className="position-relative">
       <div className="col-md-4">
         {orders.length === 0 &&
           <>
             <h2 className="font-weight-bold mb-3">Your cart is empty, check your offers:</h2>
-            <Link to={'/'} className="btn btn-success btn-block btn-lg">Restaurants<i className="feather-arrow-right"></i></Link>
+            <Link to={'/'} className="btn btn-success btn-block btn-lg">Groceries Shop<i className="feather-arrow-right"></i></Link>
           </>}
         {orders.length > 0 &&
           <div className="osahan-cart-item rounded rounded shadow-sm overflow-hidden bg-white sticky_sidebar">

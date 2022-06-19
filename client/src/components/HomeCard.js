@@ -2,7 +2,7 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
-import IconButton  from '@mui/material/IconButton';
+import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -10,7 +10,7 @@ import { addToCart } from '../app/cart.js';
 import { useDispatch } from 'react-redux';
 
 export default function HomeCard({ product }) {
-  
+
   const dispatch = useDispatch();
 
   function addToCartClick() {
@@ -31,7 +31,10 @@ export default function HomeCard({ product }) {
             {product.name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {product.price}
+            Price: {product.price} e
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Deal: {product.deal}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>

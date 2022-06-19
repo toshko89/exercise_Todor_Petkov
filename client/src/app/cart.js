@@ -17,11 +17,10 @@ const cartSlice = createSlice({
       }
     },
     removeFromCart(state, action) {
-      const product = state.orders.find(order => console.log(order));
+      const product = state.orders.find(order => order._id === action.payload._id);
       if (product) {
         if (product.quantity === 1) {
-          console.log(product);
-          state.orders = state.orders.filter(order => order.product._id !== action.payload.product._id);
+          state.orders = state.orders.filter(order => order._id !== action.payload._id);
         } else {
           product.quantity -= 1;
         }

@@ -9,6 +9,10 @@ const groceriesSchema = mongoose.Schema({
     type: Number,
     required: true
   },
+  deal: {
+    type: String,
+    required: true
+  },
   image: {
     type: String,
     required: true,
