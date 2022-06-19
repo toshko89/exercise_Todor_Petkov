@@ -6,6 +6,7 @@ export default function Home({products, setProducts}) {
   return (
     <>
       <div className="row">
+        <h1>Our products</h1>
         <Grid container spacing={2}>
           {products.length > 0 && products.map((product) => <HomeCard key={product._id} product={product} />)}
           {products.length === 0 && <CircularProgress />}
