@@ -4,10 +4,11 @@ import { getProducts } from './services/productService.js';
 import Header from './components/Header';
 import Home from './components/Home';
 import Cart from './components/Cart';
+import { PRODUCTS } from './services/mockedProductData.js'
 
 function App() {
 
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(PRODUCTS);
 
   useEffect(() => {
     (async function fetchData() {
